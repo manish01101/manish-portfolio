@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <Hero />
-      <div id="about">
+      <div id="skills">
         <Skills />
         <Experience />
       </div>

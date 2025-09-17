@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import BGAnimation from "../BGAnimation";
+import { ChevronDown } from "lucide-react";
 
 const Hero = () => {
+  const scrollToAbout = () => {
+    document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <section className="min-h-screen py-20 flex  justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <BGAnimation />
@@ -74,6 +78,12 @@ const Hero = () => {
             </svg>
           </Link>
         </div>
+        <button
+          className="pt-10 text-gray-400 hover:text-gray-600 transition-colors duration-500 cursor-pointer"
+          onClick={scrollToAbout}
+        >
+          <ChevronDown className="w-8 h-8 animate-bounce [animation-duration:1.5s]" />
+        </button>
       </div>
     </section>
   );
