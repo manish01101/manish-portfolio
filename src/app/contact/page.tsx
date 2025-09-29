@@ -2,6 +2,7 @@
 
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,14 +11,36 @@ const Contact = () => {
     subject: "",
     message: "",
   });
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success("Message sent!");
+        setFormData({ name: "", email: "", subject: "", message: "" }); // reset form
+      } else {
+        toast.error("Failed: " + data.error);
+      }
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
   };
+
   return (
     <section className="py-20 px-5 bg-gray-300">
       <div className="max-w-6xl mx-auto sm:px-6 lg:px-8 text-center">
